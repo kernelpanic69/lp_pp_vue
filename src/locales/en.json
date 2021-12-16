@@ -1,0 +1,70 @@
+{
+  "model": {
+    "sectionTitle": "Model",
+    "nameLabel": "Name",
+    "descriptionLabel": "Description",
+    "opTypeLabel": "OptimizationType",
+    "opTypeMin": "Minimize",
+    "opTypeMax": "Maximize",
+    "isObjective": "Objective"
+  },
+  "variables": {
+    "sectionTitle": "Variables",
+    "itemNameLabel": "Name",
+    "itemDescLabel": "Description",
+    "itemIntLabel": "Integer",
+    "add": "Add variable",
+    "deleteConfirmTitle": "Delete variable?",
+    "deleteConfirmText": "Are you sure you want to delete variable? All constraint coeficient associated will be deleted too."
+  },
+  "constraints": {
+    "sectionTitle": "Constraints",
+    "itemNameLabel": "Name",
+    "itemDescLabel": "Description",
+    "add": "Add constraint",
+    "deleteConfirmTitle": "Delete constraint?",
+    "delteConfirmText": "Are you sure you want to delete constraint?",
+    "isTarget": "This is objective",
+    "itemTypeLabel": "Type",
+    "typeEq": "=",
+    "typeLt": "≤",
+    "typeGt": "≥",
+    "typeFr": "⋛",
+    "itemValueLabel": "Value",
+    "coefTitle": "Coeficients",
+    "coefSearch": "Search",
+    "coefVarLabel": "Variable",
+    "coefValLabel": "Coeficinet",
+    "coefActions": "Actions",
+    "coefEdit": "Edit",
+    "coefEditDlg": "Edit coeficient",
+    "coefEditLabel": "New value",
+    "chartColor": "Color",
+    "colorDlgTitle": "Choose color"
+  },
+  "charts": {
+    "sectionTitle": "Charts",
+    "executionLabel": "Execution time",
+    "iterationLabel": "Iterations",
+    "ipsLabel": "IPS"
+  },
+  "solvers": {
+    "sectionTitle": "Solvers",
+    "statsTitle": "Stats",
+    "slnStarted": "Started",
+    "slnFinished": "Finished",
+    "slnTook": "Took",
+    "slnIterations": "Simplex iterations",
+    "slnIps": "IPS",
+    "slnTitle": "Solution",
+    "slnObjective": "Objective value",
+    "chartColor": "Chart color",
+    "slnDisplay": "Display properties",
+    "slnVars": "Variables"
+  },
+  "commonUi": {
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "done": "Done"
+  }
+}
