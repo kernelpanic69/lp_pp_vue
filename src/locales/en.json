@@ -39,17 +39,22 @@
     "coefEdit": "Edit",
     "coefEditDlg": "Edit coeficient",
     "coefEditLabel": "New value",
-    "chartColor": "Color",
-    "colorDlgTitle": "Choose color"
+    "chartColor": "Color"
   },
   "charts": {
     "sectionTitle": "Charts",
     "executionLabel": "Execution time",
     "iterationLabel": "Iterations",
-    "ipsLabel": "IPS"
+    "modelLabel": "Model",
+    "ipsLabel": "IPS",
+    "errNotEnoughVariables": "At least 2 variables required to plot",
+    "errTooMuchVariables": "Too much variables to plot on a 2d space",
+    "errNoConstraints": "No constraints to plot"
   },
   "solvers": {
     "sectionTitle": "Solvers",
+    "selectLabel": "Choose method",
+    "glpk": "GLPK (Branch and Cut)",
     "statsTitle": "Stats",
     "slnStarted": "Started",
     "slnFinished": "Finished",
@@ -60,11 +65,18 @@
     "slnObjective": "Objective value",
     "chartColor": "Chart color",
     "slnDisplay": "Display properties",
-    "slnVars": "Variables"
+    "slnVars": "Variables",
+    "slnVarLabel": "Variable",
+    "slnValLabel": "Value",
+    "success": "Solution obtained successfully"
+  },
+  "menu": {
+    "fileNew": "New"
   },
   "commonUi": {
     "delete": "Delete",
     "cancel": "Cancel",
-    "done": "Done"
+    "done": "Done",
+    "colorDlgTitle": "Choose color"
   }
 }

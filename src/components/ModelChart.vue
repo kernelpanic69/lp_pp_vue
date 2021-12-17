@@ -1,6 +1,15 @@
 <template>
-  <ChartJs type="scatter" :data="chartData" :options="{ showLine: true }">
+  <ChartJs
+    v-if="!plotMessage"
+    type="scatter"
+    :data="chartData"
+    :options="{ showLine: true }"
+  >
   </ChartJs>
+
+  <v-alert v-else type="warning" dismissible class="mt-8">
+    {{ plotMessage }}
+  </v-alert>
 </template>
 
 <script lang="ts">
@@ -16,6 +25,22 @@ import ChartJs from "@/components/ChartJs.vue";
   },
 })
 export default class ModelChart extends Vue {
+  get plotMessage() {
+    if (this.$store.getters.numVariables < 2) {
+      return this.$t("charts.errNotEnoughVariables");
+    }
+
+    if (this.$store.getters.numVariables > 2) {
+      return this.$t("charts.errTooMuchVariables");
+    }
+
+    if (!this.$store.getters.numConstraints) {
+      return this.$t("charts.errNoConstraints");
+    }
+
+    return "";
+  }
+
   get chartData(): any {
     const data = [];
 

@@ -6,7 +6,13 @@
       :data="it"
       :key="it.id || index"
     ></component>
-    <v-pagination v-if="numPages > 1" v-model="page" :length="numPages">
+    <v-pagination
+      class="mt-10"
+      v-if="numPages > 1"
+      v-model="page"
+      :length="numPages"
+      total-visible="7"
+    >
     </v-pagination>
   </v-expansion-panels>
 </template>

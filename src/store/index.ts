@@ -31,6 +31,7 @@ export interface Solution {
 }
 
 export const actions = {
+  REQUEST_FILE: "requestFile",
   SOLVERS: {
     RUN_SOLVER: "solvers/runSolver",
     SET_MODEL: "solvers/setModel",
@@ -42,6 +43,7 @@ export const mutations = {
   UPDATE_NAME: "updateName",
   UPDATE_DESCRIPTION: "updateDescription",
   SET_OBJECTIVE: "setObjective",
+  LOAD: "load",
 
   ADD_VARIABLE: "addVariable",
   DROP_VARIABLE: "dropVariable",
@@ -72,6 +74,10 @@ export default new Vuex.Store<LpModel>({
   mutations: {
     updateName(state: LpModel, newName: string) {
       state.name = newName;
+    },
+
+    load(state: LpModel, newModel: LpModel) {
+      Object.assign(state, newModel);
     },
 
     updateDescription(state: LpModel, newDesc: string) {
@@ -178,10 +184,6 @@ export default new Vuex.Store<LpModel>({
     setConColor(state: LpModel, data: { id: number; color: string }) {
       state.constraints[data.id].color = data.color;
     },
-
-    newModel(state) {
-      Object.assign(state, new LpModel());
-    }
   },
   getters: {
     variablesList(state: LpModel): Variable[] {
@@ -201,6 +203,65 @@ export default new Vuex.Store<LpModel>({
     numConstraints(state: LpModel): number {
       return Object.keys(state.constraints).length;
     },
+  },
+  actions: {
+    async requestFile({ state, commit }, data: { fileName: string }) {
+      const res = await axios.post(hostname + "load-file/" + data.fileName, null, {
+        transformResponse: (json, h): LpModel => {
+          const data = JSON.parse(json);
+          const nVars: number = data.variables.length;
+          const nCons: number = data.constraints.length;
+
+          const vars: { [id: number]: Variable } = {};
+          const cons: { [id: number]: Constraint } = {};
+
+          const z = new Constraint({
+            name: data.objName
+          });
+
+          const varIds: number[] = []
+
+          for (let i = 0; i < nVars; i++) {
+            const v = new Variable({
+              name: data.variables[i],
+            });
+
+            vars[v.id] = v;
+            varIds.push(v.id);
+
+            z.coefs[v.id] = data.objective[i];
+          }
+
+          cons[z.id] = z;
+
+          for (let i = 0; i < nCons; i++) {
+            const c = new Constraint({
+              name: data.consNames[i],
+              type: data.consTypes[i],
+              value: data.consVals[i],
+            });
+
+            for (let j = 0; j < nVars; j++) {
+              c.coefs[varIds[j]] = data.constraints[i][j];
+            }
+
+            cons[c.id] = c;
+          }
+
+          return new LpModel({
+            name: data.name,
+            readonly: true,
+            constraints: cons,
+            objectiveId: z.id,
+            type: data.type,
+            variables: vars
+          })
+        }
+      });
+
+      commit(mutations.LOAD, res.data);
+      return res;
+    }
   },
   plugins: [
     // new VuexPersist<LpModel>({
@@ -243,6 +304,8 @@ export default new Vuex.Store<LpModel>({
       actions: {
         async runSolver({ rootState, state, dispatch, commit }, params: { name: SolverNames }) {
           async function execute() {
+            commit("setRunning", true);
+
             return axios.get(hostname + solverPaths[params.name], {
               transformResponse: (data, headers) => {
                 if (data.error) {
@@ -268,15 +331,17 @@ export default new Vuex.Store<LpModel>({
 
                 return res;
               }
-            });
+            }).finally(() => commit("setRunning", false));
           }
 
-          await dispatch("setModel");
+          if (!rootState.readonly) {
+            await dispatch("setModel");
+          }
           const res = await execute();
 
           commit("addSolution", res.data);
 
-          console.log(state);
+          return;
         },
         async setModel({ rootState, rootGetters, commit }) {
           return await axios.post(
@@ -340,6 +405,7 @@ export default new Vuex.Store<LpModel>({
             }
           );
         },
+
       },
     },
   },

@@ -29,7 +29,7 @@
 
         <h5 class="text-h5 mb-4 mt-4">{{ $t("solvers.slnDisplay") }}</h5>
 
-        <v-dialog max-width="500">
+        <v-dialog width="auto">
           <template v-slot:activator="{ on, attrs }">
             <v-btn v-on="on" v-bind="attrs"
               >{{ $t("solvers.chartColor") }}
@@ -39,7 +39,8 @@
                   display:block;
                   background-color:${sol.color};
                   width:15px;
-                  height:15px`"
+                  height:15px;
+                  border-radius:50%;`"
               ></span>
             </v-btn>
           </template>

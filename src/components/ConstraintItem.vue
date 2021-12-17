@@ -86,7 +86,7 @@
           v-model="value"
         ></v-text-field>
 
-        <v-dialog max-width="500" v-if="!isObjective">
+        <v-dialog width="auto" v-if="!isObjective">
           <template v-slot:activator="{ on, attrs }">
             <v-btn v-on="on" v-bind="attrs"
               >{{ $t("constraints.chartColor") }}
@@ -96,7 +96,8 @@
                   display:block;
                   background-color:${constraint.color};
                   width:15px;
-                  height:15px`"
+                  height:15px;
+                  border-radius:50%;`"
               ></span>
             </v-btn>
           </template>

@@ -7,10 +7,10 @@
 
       <v-card-text>
         <v-tabs v-model="tab">
-          <v-tab>Model</v-tab>
-          <v-tab>Execution time</v-tab>
-          <v-tab>Iterations</v-tab>
-          <v-tab>IPS</v-tab>
+          <v-tab>{{ $t("charts.modelLabel") }}</v-tab>
+          <v-tab>{{ $t("charts.executionLabel") }}</v-tab>
+          <v-tab>{{ $t("charts.iterationLabel") }}</v-tab>
+          <v-tab>{{ $t("charts.ipsLabel") }}</v-tab>
         </v-tabs>
         <v-tabs-items v-model="tab">
           <v-tab-item>
@@ -20,9 +20,11 @@
           <v-tab-item>
             <ExecutionChart> </ExecutionChart>
           </v-tab-item>
+
           <v-tab-item>
             <IterChart> </IterChart>
           </v-tab-item>
+
           <v-tab-item>
             <IPSChart> </IPSChart>
           </v-tab-item>
@@ -46,7 +48,7 @@ import IPSChart from "@/components/IPSChart.vue";
     ModelChart,
     ExecutionChart,
     IterChart,
-    IPSChart
+    IPSChart,
   },
 })
 export default class ChartView extends Vue {

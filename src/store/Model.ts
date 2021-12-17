@@ -36,9 +36,9 @@ type OptType = "min" | "max";
 
 export class LpModel {
   readonly = false;
-  name = "";
+  name = "test";
   description = "";
-  objectiveId = -1;
+  objectiveId = 0;
   type: OptType = "max";
   variables: { [varId: number]: Variable } = {};
   constraints: { [conId: number]: Constraint } = {};

@@ -81,7 +81,7 @@ export default class SolversView extends Vue {
       })
       .catch((err) => {
         this.$store.commit(mutations.SOLVERS.SET_MESSAGE, {
-          message: this.$t(err),
+          message: this.$t(JSON.stringify(err)),
           type: "error",
         });
       });

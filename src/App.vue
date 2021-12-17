@@ -11,7 +11,12 @@
         </template>
 
         <v-list>
-          <v-list-item v-for="item in m.items" :key="item.title">
+          <v-list-item
+            v-for="item in m.items"
+            link
+            @click="item.action"
+            :key="item.title"
+          >
             {{ item.title }}
           </v-list-item>
         </v-list>
@@ -46,6 +51,25 @@
 
     <v-main>
       <router-view />
+      <v-dialog v-model="newConfirmShow">
+        <v-card>
+          <v-card-title>{{ $t("menu.newConfirmTitle") }}</v-card-title>
+
+          <v-card-text>
+            {{ $t("menu.newConfirmText") }}
+          </v-card-text>
+
+          <v-card-actions>
+            <v-btn color="primary" @click="newConfirmShow = false">{{
+              $t("commonUi.cancel")
+            }}</v-btn>
+            <v-btn color="error" @click="loadNew">
+              <v-icon>mdi-trash-can</v-icon>
+              {{ $t("commonUi.confirm") }}</v-btn
+            >
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-main>
   </v-app>
 </template>
@@ -53,7 +77,8 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
-import { mutations } from "./store";
+import { actions, mutations } from "./store";
+import { LpModel } from "./store/Model";
 
 @Component({})
 export default class App extends Vue {
@@ -87,19 +112,33 @@ export default class App extends Vue {
     },
   ];
 
+  newConfirmShow = false;
+
   menu = [
     {
       title: "File",
       items: [
         {
           title: this.$t("menu.fileNew"),
+          action: (e: any) => {
+            e.preventDefault();
+            this.newConfirmShow = true;
+          },
+        },
+        {
+          title: this.$t("menu.file"),
           action: () => {
-            this.$store.commit(mutations.NEW_MODEL);
+            this.$store.dispatch(actions.REQUEST_FILE, { fileName: "pilot" });
           },
         },
       ],
     },
   ];
+
+  loadNew() {
+    this.$store.commit(mutations.LOAD, new LpModel());
+  }
+
   drawer = false;
 
   get mini(): boolean {

@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-card>
-      <v-card-title>{{ name }}</v-card-title>
+      <v-card-title>{{ $t("model.sectionTitle") }}</v-card-title>
       <v-form v-model="valid">
         <v-container>
           <v-text-field
