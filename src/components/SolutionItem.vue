@@ -3,6 +3,9 @@
     <v-expansion-panel-header disable-icon-rotate>
       {{ sol.solver }} - <em>{{ sol.finished.toTimeString() }}</em>
       <template v-slot:actions>
+        <v-btn icon @click="deleteSln">
+          <v-icon color="error">mdi-trash-can</v-icon>
+        </v-btn>
         <v-icon v-if="!sol.err" color="success">mdi-check-circle</v-icon>
         <v-icon v-else color="error">mdi-alert</v-icon>
       </template>
@@ -124,6 +127,10 @@ export default class SolutionItem extends Vue {
       id: this.sol.id,
       color: newCol,
     });
+  }
+
+  deleteSln() {
+    this.$store.commit(mutations.SOLVERS.DROP_SOLUTION, { id: this.sol.id });
   }
 
   get sol(): Solution {

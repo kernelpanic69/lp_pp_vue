@@ -29,7 +29,6 @@ const c2 = new Constraint({
   value: 14.0,
 });
 
-
 export const simpleProblem: LpModel = {
   readonly: false,
   name: "Простая задача",

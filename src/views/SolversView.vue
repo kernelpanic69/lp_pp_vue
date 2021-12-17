@@ -48,6 +48,10 @@ export default class SolversView extends Vue {
       text: this.$t("solvers.glpk"),
       value: "glpk",
     },
+    {
+      text: this.$t("solvers.glpkSimplex"),
+      value: "glpk-simplex",
+    },
   ];
 
   chosenSolver = "glpk";

@@ -10,8 +10,9 @@ const hostname = "http://127.0.0.1:9080/";
 
 type SolverNames = "glpk";
 const solverPaths = {
-  "glpk": "run-glpk"
-}
+  glpk: "run-glpk",
+  "glpk-simplex": "run-simplex",
+};
 
 let solutionId = 0;
 
@@ -27,7 +28,7 @@ export interface Solution {
   iterations: number;
   ips: number;
   objective: number;
-  variables: { [name: string]: number }
+  variables: { [name: string]: number };
 }
 
 export const actions = {
@@ -62,10 +63,11 @@ export const mutations = {
   SET_CON_COLOR: "setConColor",
 
   SOLVERS: {
+    DROP_SOLUTION: "solvers/dropSolution",
     SET_MESSAGE: "solvers/setMessage",
     CLEAR_MESSAGE: "solvers/clearMessage",
     SET_RUNNING: "solvers/setRunning",
-    SET_COLOR: "solvers/setColor"
+    SET_COLOR: "solvers/setColor",
   },
 };
 
@@ -206,62 +208,66 @@ export default new Vuex.Store<LpModel>({
   },
   actions: {
     async requestFile({ state, commit }, data: { fileName: string }) {
-      const res = await axios.post(hostname + "load-file/" + data.fileName, null, {
-        transformResponse: (json, h): LpModel => {
-          const data = JSON.parse(json);
-          const nVars: number = data.variables.length;
-          const nCons: number = data.constraints.length;
+      const res = await axios.post(
+        hostname + "load-file/" + data.fileName,
+        null,
+        {
+          transformResponse: (json, h): LpModel => {
+            const data = JSON.parse(json);
+            const nVars: number = data.variables.length;
+            const nCons: number = data.constraints.length;
 
-          const vars: { [id: number]: Variable } = {};
-          const cons: { [id: number]: Constraint } = {};
+            const vars: { [id: number]: Variable } = {};
+            const cons: { [id: number]: Constraint } = {};
 
-          const z = new Constraint({
-            name: data.objName
-          });
-
-          const varIds: number[] = []
-
-          for (let i = 0; i < nVars; i++) {
-            const v = new Variable({
-              name: data.variables[i],
+            const z = new Constraint({
+              name: data.objName,
             });
 
-            vars[v.id] = v;
-            varIds.push(v.id);
+            const varIds: number[] = [];
 
-            z.coefs[v.id] = data.objective[i];
-          }
+            for (let i = 0; i < nVars; i++) {
+              const v = new Variable({
+                name: data.variables[i],
+              });
 
-          cons[z.id] = z;
+              vars[v.id] = v;
+              varIds.push(v.id);
 
-          for (let i = 0; i < nCons; i++) {
-            const c = new Constraint({
-              name: data.consNames[i],
-              type: data.consTypes[i],
-              value: data.consVals[i],
-            });
-
-            for (let j = 0; j < nVars; j++) {
-              c.coefs[varIds[j]] = data.constraints[i][j];
+              z.coefs[v.id] = data.objective[i];
             }
 
-            cons[c.id] = c;
-          }
+            cons[z.id] = z;
 
-          return new LpModel({
-            name: data.name,
-            readonly: true,
-            constraints: cons,
-            objectiveId: z.id,
-            type: data.type,
-            variables: vars
-          })
+            for (let i = 0; i < nCons; i++) {
+              const c = new Constraint({
+                name: data.consNames[i],
+                type: data.consTypes[i],
+                value: data.consVals[i],
+              });
+
+              for (let j = 0; j < nVars; j++) {
+                c.coefs[varIds[j]] = data.constraints[i][j];
+              }
+
+              cons[c.id] = c;
+            }
+
+            return new LpModel({
+              name: data.name,
+              readonly: true,
+              constraints: cons,
+              objectiveId: z.id,
+              type: data.type,
+              variables: vars,
+            });
+          },
         }
-      });
+      );
 
       commit(mutations.LOAD, res.data);
       return res;
-    }
+    },
   },
   plugins: [
     // new VuexPersist<LpModel>({
@@ -281,6 +287,11 @@ export default new Vuex.Store<LpModel>({
         setRunning(state, isRunning: boolean) {
           state.running = isRunning;
         },
+
+        dropSolution(state, data: { id: number }) {
+          const { [data.id]: drop, ...newSols } = state.solutions;
+          state.solutions = newSols;
+        },
         setMessage(
           state,
           alert: { message: string; type: "sucess" | "error" | "warning" }
@@ -297,41 +308,46 @@ export default new Vuex.Store<LpModel>({
           state.solutions = { ...state.solutions, [solver.id]: solver };
         },
 
-        setColor(state, data: { id: number, color: string }) {
+        setColor(state, data: { id: number; color: string }) {
           state.solutions[data.id].color = data.color;
-        }
+        },
       },
       actions: {
-        async runSolver({ rootState, state, dispatch, commit }, params: { name: SolverNames }) {
+        async runSolver(
+          { rootState, state, dispatch, commit },
+          params: { name: SolverNames }
+        ) {
           async function execute() {
             commit("setRunning", true);
 
-            return axios.get(hostname + solverPaths[params.name], {
-              transformResponse: (data, headers) => {
-                if (data.error) {
-                  return data;
-                }
+            return axios
+              .get(hostname + solverPaths[params.name], {
+                transformResponse: (data, headers) => {
+                  if (data.error) {
+                    return data;
+                  }
 
-                const d = JSON.parse(data);
+                  const d = JSON.parse(data);
 
-                const res: Solution = {
-                  id: solutionId++,
-                  color: randomRGB(),
-                  err: d.err,
-                  errMessage: d.errMessage,
-                  solver: params.name,
-                  variables: d.variables,
-                  objective: d.objective,
-                  took: d.stats.took,
-                  iterations: d.stats.iterations,
-                  ips: d.stats.iterations / d.stats.took * 1000,
-                  started: new Date(d.stats.started),
-                  finished: new Date(d.stats.finished)
-                }
+                  const res: Solution = {
+                    id: solutionId++,
+                    color: randomRGB(),
+                    err: d.err,
+                    errMessage: d.errMessage,
+                    solver: params.name,
+                    variables: d.variables,
+                    objective: d.objective,
+                    took: d.stats.took,
+                    iterations: d.stats.iterations,
+                    ips: (d.stats.iterations / d.stats.took) * 1000,
+                    started: new Date(d.stats.started),
+                    finished: new Date(d.stats.finished),
+                  };
 
-                return res;
-              }
-            }).finally(() => commit("setRunning", false));
+                  return res;
+                },
+              })
+              .finally(() => commit("setRunning", false));
           }
 
           if (!rootState.readonly) {
@@ -405,7 +421,6 @@ export default new Vuex.Store<LpModel>({
             }
           );
         },
-
       },
     },
   },
