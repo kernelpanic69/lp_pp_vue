@@ -12,6 +12,9 @@ type SolverNames = "glpk";
 const solverPaths = {
   glpk: "run-glpk",
   "glpk-simplex": "run-simplex",
+  "lppp-simplex": "run-simplex",
+  "lppp-bnb": "run-glpk",
+  "lppp-homory": "run-glpk"
 };
 
 let solutionId = 0;

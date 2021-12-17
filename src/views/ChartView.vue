@@ -6,13 +6,13 @@
       </v-card-title>
 
       <v-card-text>
-        <v-tabs v-model="tab">
+        <v-tabs v-model="tab" fixed-tabs>
           <v-tab>{{ $t("charts.modelLabel") }}</v-tab>
           <v-tab>{{ $t("charts.executionLabel") }}</v-tab>
           <v-tab>{{ $t("charts.iterationLabel") }}</v-tab>
           <v-tab>{{ $t("charts.ipsLabel") }}</v-tab>
         </v-tabs>
-        <v-tabs-items v-model="tab">
+        <v-tabs-items v-model="tab" class="mt-8">
           <v-tab-item>
             <ModelChart> </ModelChart>
           </v-tab-item>

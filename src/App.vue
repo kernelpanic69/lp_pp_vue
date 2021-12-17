@@ -5,19 +5,19 @@
         class="d-sm-none"
         @click="drawer = !drawer"
       ></v-app-bar-nav-icon>
-      <v-menu v-for="m in menu" :key="m.title">
+
+      <v-menu>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn v-bind="attrs" v-on="on" text>{{ m.title }}</v-btn>
+          <v-btn v-bind="attrs" v-on="on" text>{{ $t("menu.file") }}</v-btn>
         </template>
 
         <v-list>
-          <v-list-item
-            v-for="item in m.items"
-            link
-            @click="item.action"
-            :key="item.title"
-          >
-            {{ item.title }}
+          <v-list-item link @click.stop="newConfirmShow = true">
+            {{ $t("menu.fileNew") }}
+          </v-list-item>
+
+          <v-list-item link @click.stop="benchLoadShow = true">
+            {{ $t("menu.fileBench") }}
           </v-list-item>
         </v-list>
       </v-menu>
@@ -49,27 +49,63 @@
       </v-list>
     </v-navigation-drawer>
 
+    <v-dialog v-model="newConfirmShow">
+      <v-card>
+        <v-card-title>{{ $t("menu.newConfirmTitle") }}</v-card-title>
+
+        <v-card-text>
+          {{ $t("menu.newConfirmText") }}
+        </v-card-text>
+
+        <v-card-actions>
+          <v-btn color="primary" @click="newConfirmShow = false">{{
+            $t("commonUi.cancel")
+          }}</v-btn>
+          <v-btn color="error" @click="loadNew">
+            <v-icon>mdi-trash-can</v-icon>
+            {{ $t("commonUi.confirm") }}</v-btn
+          >
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <v-dialog v-model="benchLoadShow">
+      <v-card>
+        <v-card-title>{{ $t("menu.benchDlgTitle") }}</v-card-title>
+        <v-card-subtitle>
+          {{ $t("menu.benchDlgSubtitle") }}
+          <span class="info--text">{{ $t("menu.benchDlgNote") }}</span>
+        </v-card-subtitle>
+
+        <v-card-text>
+          <v-alert text type="warning" dismissible>
+            {{ $t("menu.benchDlgAlert") }}
+          </v-alert>
+
+          <v-row>
+            <v-col>
+              <v-combobox
+                v-model="chosenBenchmark"
+                :items="benchItems"
+              ></v-combobox>
+            </v-col>
+          </v-row>
+        </v-card-text>
+
+        <v-card-actions>
+          <v-btn color="error" @click="benchLoadShow = false">
+            {{ $t("commonUi.cancel") }}
+          </v-btn>
+
+          <v-btn color="success" @click="loadBenchmark">
+            {{ $t("commonUi.confirm") }}
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
     <v-main>
       <router-view />
-      <v-dialog v-model="newConfirmShow">
-        <v-card>
-          <v-card-title>{{ $t("menu.newConfirmTitle") }}</v-card-title>
-
-          <v-card-text>
-            {{ $t("menu.newConfirmText") }}
-          </v-card-text>
-
-          <v-card-actions>
-            <v-btn color="primary" @click="newConfirmShow = false">{{
-              $t("commonUi.cancel")
-            }}</v-btn>
-            <v-btn color="error" @click="loadNew">
-              <v-icon>mdi-trash-can</v-icon>
-              {{ $t("commonUi.confirm") }}</v-btn
-            >
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
     </v-main>
   </v-app>
 </template>
@@ -79,6 +115,8 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import { actions, mutations } from "./store";
 import { LpModel } from "./store/Model";
+
+import benchmarks from "./benchmarks.json";
 
 @Component({})
 export default class App extends Vue {
@@ -113,27 +151,19 @@ export default class App extends Vue {
   ];
 
   newConfirmShow = false;
+  benchLoadShow = false;
 
-  menu = [
-    {
-      title: "File",
-      items: [
-        {
-          title: this.$t("menu.fileNew"),
-          action: (e: any) => {
-            e.preventDefault();
-            this.newConfirmShow = true;
-          },
-        },
-        {
-          title: this.$t("menu.file"),
-          action: () => {
-            this.$store.dispatch(actions.REQUEST_FILE, { fileName: "pilot" });
-          },
-        },
-      ],
-    },
-  ];
+  benchItems = benchmarks;
+
+  chosenBenchmark = "afiro";
+
+  loadBenchmark() {
+    this.benchLoadShow = false;
+    
+    this.$store.dispatch(actions.REQUEST_FILE, {
+      fileName: this.chosenBenchmark,
+    });
+  }
 
   loadNew() {
     this.$store.commit(mutations.LOAD, new LpModel());

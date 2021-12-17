@@ -52,6 +52,18 @@ export default class SolversView extends Vue {
       text: this.$t("solvers.glpkSimplex"),
       value: "glpk-simplex",
     },
+    {
+      text: this.$t("solvers.lpppSimplex"),
+      value: "lppp-simplex",
+    },
+    {
+      text: this.$t("solvers.lpppBnB"),
+      value: "lppp-bnb",
+    },
+    {
+      text: this.$t("solvers.lpppHomory"),
+      value: "lppp-homory",
+    },
   ];
 
   chosenSolver = "glpk";
@@ -85,7 +97,7 @@ export default class SolversView extends Vue {
       })
       .catch((err) => {
         this.$store.commit(mutations.SOLVERS.SET_MESSAGE, {
-          message: this.$t(JSON.stringify(err)),
+          message: err,
           type: "error",
         });
       });

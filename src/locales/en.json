@@ -55,6 +55,10 @@
     "sectionTitle": "Solvers",
     "selectLabel": "Choose method",
     "glpk": "GLPK (Branch and Cut)",
+    "glpkSimplex": "GLPK (Regular simplex method)",
+    "lpppSimplex": "Lp++ (Simplex method)",
+    "lpppBnB": "Lp++ (Branch and bounds)",
+    "lpppHomory": "Lp++ (Homory cuts)",
     "statsTitle": "Stats",
     "slnStarted": "Started",
     "slnFinished": "Finished",
@@ -68,15 +72,25 @@
     "slnVars": "Variables",
     "slnVarLabel": "Variable",
     "slnValLabel": "Value",
-    "success": "Solution obtained successfully"
+    "success": "Solution obtained successfully",
+    "run": "Solve"
   },
   "menu": {
-    "fileNew": "New"
+    "file": "File",
+    "fileNew": "New",
+    "newConfirmTitle": "Create new model",
+    "newConfirmText": "Do you want to create new model. Your currrent model will be overriden",
+    "fileBench": "Load benchmark",
+    "benchDlgTitle": "Load benchmark",
+    "benchDlgSubtitle": "Chose benchmark file from the list below.",
+    "benchDlgNote": "Note: Not all files are guaranteed to be feasible or even valid",
+    "benchDlgAlert": "Make sure to export your current model. It will be overriden"
   },
   "commonUi": {
     "delete": "Delete",
     "cancel": "Cancel",
     "done": "Done",
-    "colorDlgTitle": "Choose color"
+    "colorDlgTitle": "Choose color",
+    "confirm": "confirm"
   }
 }
