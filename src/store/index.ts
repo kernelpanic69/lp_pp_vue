@@ -7,7 +7,7 @@ import VuexPersist from "vuex-persist";
 
 Vue.use(Vuex);
 
-const hostname = "http://127.0.0.1:9080/";
+const hostname = "http://10.36.41.20:9080/";
 
 type SolverNames = "glpk";
 const solverPaths = {
