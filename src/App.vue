@@ -21,6 +21,48 @@
           </v-list-item>
         </v-list>
       </v-menu>
+
+      <v-spacer></v-spacer>
+
+      <v-menu>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn icon v-on="on" v-bind="attrs">
+            <v-icon>mdi-cog</v-icon>
+          </v-btn>
+        </template>
+
+        <v-list>
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>mdi-translate</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title>
+                {{ $t("app.language") }}
+                <v-select
+                  @click.stop
+                  v-model="locale"
+                  :items="locales"
+                ></v-select>
+              </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>mdi-theme-light-dark</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title>
+                {{ $t("app.themeDark") }}
+                <v-switch @click.stop v-model="dark"></v-switch>
+              </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </v-app-bar>
 
     <v-navigation-drawer
@@ -122,33 +164,46 @@ import benchmarks from "./benchmarks.json";
 export default class App extends Vue {
   name = "App";
 
-  nav = [
+  locales = [
     {
-      title: "Model",
-      route: "/",
-      icon: "mdi-feature-search",
+      text: "English",
+      value: "en",
     },
     {
-      title: this.$t("variables.sectionTitle"),
-      route: "/variables",
-      icon: "mdi-variable-box",
-    },
-    {
-      title: this.$t("constraints.sectionTitle"),
-      route: "/constraints",
-      icon: "mdi-matrix",
-    },
-    {
-      title: this.$t("charts.sectionTitle"),
-      route: "/chart",
-      icon: "mdi-chart-bar",
-    },
-    {
-      title: this.$t("solvers.sectionTitle"),
-      route: "/solvers",
-      icon: "mdi-desktop-classic",
+      text: "Українська",
+      value: "uk",
     },
   ];
+
+  get nav() {
+    return [
+      {
+        title: this.$t("model.sectionTitle"),
+        route: "/",
+        icon: "mdi-feature-search",
+      },
+      {
+        title: this.$t("variables.sectionTitle"),
+        route: "/variables",
+        icon: "mdi-variable-box",
+      },
+      {
+        title: this.$t("constraints.sectionTitle"),
+        route: "/constraints",
+        icon: "mdi-matrix",
+      },
+      {
+        title: this.$t("charts.sectionTitle"),
+        route: "/chart",
+        icon: "mdi-chart-bar",
+      },
+      {
+        title: this.$t("solvers.sectionTitle"),
+        route: "/solvers",
+        icon: "mdi-desktop-classic",
+      },
+    ];
+  }
 
   newConfirmShow = false;
   benchLoadShow = false;
@@ -159,10 +214,39 @@ export default class App extends Vue {
 
   loadBenchmark() {
     this.benchLoadShow = false;
-    
+
     this.$store.dispatch(actions.REQUEST_FILE, {
       fileName: this.chosenBenchmark,
     });
+  }
+
+  created() {
+    this.$i18n.locale = this.locale;
+    this.$vuetify.theme.dark = this.dark;
+  }
+
+  get locale() {
+    const loc = window.localStorage.getItem("locale") || this.$i18n.locale;
+    return loc;
+  }
+
+  set locale(newLoc: string) {
+    window.localStorage.setItem("locale", newLoc);
+    this.$i18n.locale = newLoc;
+  }
+
+  get dark(): boolean {
+    return !!window.localStorage.getItem("dark");
+  }
+
+  set dark(newVal: boolean) {
+    if (newVal) {
+      localStorage.setItem("dark", "true");
+    } else {
+      localStorage.removeItem("dark");
+    }
+
+    this.$vuetify.theme.dark = newVal;
   }
 
   loadNew() {

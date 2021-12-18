@@ -3,6 +3,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import { brewlersProblem } from "./brewler";
 import { Constraint, ConsType, LpModel, randomRGB, Variable } from "./Model";
+import VuexPersist from "vuex-persist";
 
 Vue.use(Vuex);
 
@@ -273,9 +274,9 @@ export default new Vuex.Store<LpModel>({
     },
   },
   plugins: [
-    // new VuexPersist<LpModel>({
-    //   storage: window.localStorage
-    // }).plugin
+    new VuexPersist<LpModel>({
+      storage: window.localStorage
+    }).plugin
   ],
   modules: {
     solvers: {

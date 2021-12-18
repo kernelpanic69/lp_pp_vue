@@ -65,8 +65,9 @@
         ></v-textarea>
 
         <v-switch
+          v-if="!isObjective"
           v-model="isObjective"
-          :label="$t('model.isObjective')"
+          :label="$t('constraints.isObjective')"
         ></v-switch>
 
         <v-select
@@ -327,7 +328,15 @@ export default class ConstraintItem extends Vue {
   }
 
   set isObjective(value: boolean) {
-    this.$store.commit(mutations.SET_OBJECTIVE, { conId: this.constraint.id });
+    if (value) {
+      this.$store.commit(mutations.SET_OBJECTIVE, {
+        conId: this.constraint.id,
+      });
+    } else {
+      this.$store.commit(mutations.SET_OBJECTIVE, {
+        conId: this.$store.getters.constraintsList[0].id,
+      });
+    }
   }
 
   get color(): string {

@@ -1,3 +1,100 @@
 {
-    
+  "app": {
+    "language": "Мова",
+    "themeDark": "Темна"
+  },
+  "model": {
+    "sectionTitle": "Модель",
+    "nameLabel": "Ім'я",
+    "descriptionLabel": "Опис",
+    "opTypeLabel": "Тип оптимізації",
+    "opTypeMin": "Мінімізувати",
+    "opTypeMax": "Максімізувати"
+  },
+  "variables": {
+    "sectionTitle": "Змінні",
+    "itemNameLabel": "Ім'я",
+    "itemDescLabel": "Опис",
+    "itemIntLabel": "Ціла",
+    "add": "Додати змінну",
+    "deleteConfirmTitle": "Видалити змінну?",
+    "deleteConfirmText": "Ви впевнені, що хочете видалити змінну? Всі пов'язані коефіцієнти обмежень будуть також видалені."
+  },
+  "constraints": {
+    "sectionTitle": "Обмеження",
+    "itemNameLabel": "Ім'я",
+    "itemDescLabel": "Опис",
+    "add": "Додати обмеження",
+    "deleteConfirmTitle": "Видалити обмеження?",
+    "delteConfirmText": "Ви впевнені, що хочете видалити обмеження?",
+    "isTarget": "Це мета",
+    "isObjective": "Зробити метою",
+    "itemTypeLabel": "Тип",
+    "typeEq": "=",
+    "typeLt": "≤",
+    "typeGt": "≥",
+    "typeFr": "⋛",
+    "itemValueLabel": "Значення",
+    "coefTitle": "Коефіціенти",
+    "coefSearch": "Шукати",
+    "coefVarLabel": "Змінна",
+    "coefValLabel": "Коефіціент",
+    "coefActions": "Дії",
+    "coefEdit": "Змінити",
+    "coefEditDlg": "Редагувати коефіціент",
+    "coefEditLabel": "Нове значення",
+    "chartColor": "Колір на графіку"
+  },
+  "charts": {
+    "sectionTitle": "Графіки",
+    "executionLabel": "Час виконання",
+    "iterationLabel": "Кількість ітерацій",
+    "modelLabel": "Модель",
+    "ipsLabel": "Ітерацій за секунду",
+    "errNotEnoughVariables": "Модель має містити 2 змінних",
+    "errTooMuchVariables": "Забагато змінних для відображення у 2d просторі",
+    "errNoConstraints": "Немає обмежень"
+  },
+  "solvers": {
+    "sectionTitle": "Результати",
+    "selectLabel": "Обрати метод",
+    "glpk": "GLPK - Гілок і зрізів",
+    "glpkSimplex": "GLPK - Звичайний симплекс метод",
+    "lpppSimplex": "Lp++ - Звичайний симплекс метод",
+    "lpppBnB": "Lp++ - Гілок і меж",
+    "lpppHomory": "Lp++ - Метод зрізів (Р. Гоморі)",
+    "statsTitle": "Показники",
+    "slnStarted": "Розпочато",
+    "slnFinished": "Закінчено",
+    "slnTook": "Зайняло часу",
+    "slnIterations": "Ітерацій",
+    "slnIps": "Ітерацій за сек.",
+    "slnTitle": "Вирішення",
+    "slnObjective": "Мета",
+    "chartColor": "Колір на графіку",
+    "slnDisplay": "Відображення",
+    "slnVars": "Значення змінних",
+    "slnVarLabel": "Змінна",
+    "slnValLabel": "Значення",
+    "success": "Успішно вирішенно",
+    "run": "Вирішити"
+  },
+  "menu": {
+    "file": "Файл",
+    "fileNew": "Новий",
+    "newConfirmTitle": "Створити нову модель?",
+    "newConfirmText": "Ви хочете створити нову модель. Ваша поточна модель буде видалена",
+    "fileBench": "Завантажити бенчмарк",
+    "benchDlgTitle": "Оберіть бенчмарк",
+    "benchDlgSubtitle": "Оберіть файл бенчмарку зі списку нижче.",
+    "benchDlgNote": "Увага: Не всі файли гарантовано вирішуванні",
+    "benchDlgAlert": "Ваша поточна модель буде видалена"
+  },
+  "commonUi": {
+    "delete": "Видалити",
+    "cancel": "Скасувати",
+    "done": "Готово",
+    "colorDlgTitle": "Оберіть колір",
+    "confirm": "добре"
+  }
 }

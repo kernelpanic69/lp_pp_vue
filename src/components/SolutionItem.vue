@@ -1,7 +1,7 @@
 <template>
   <v-expansion-panel>
     <v-expansion-panel-header disable-icon-rotate>
-      {{ sol.solver }} - <em>{{ sol.finished.toTimeString() }}</em>
+      {{ sol.solver }} - <em>{{ $d(sol.finished, "precise") }}</em>
       <template v-slot:actions>
         <v-btn icon @click="deleteSln">
           <v-icon color="error">mdi-trash-can</v-icon>
@@ -21,9 +21,15 @@
 
         <h5 class="text-h5 mb-4 mt-4">{{ $t("solvers.statsTitle") }}</h5>
 
-        <KVItem :label="$t('solvers.slnStarted')" :value="sol.started">
+        <KVItem
+          :label="$t('solvers.slnStarted')"
+          :value="$d(sol.started, 'precise')"
+        >
         </KVItem>
-        <KVItem :label="$t('solvers.slnFinished')" :value="sol.finished">
+        <KVItem
+          :label="$t('solvers.slnFinished')"
+          :value="$d(sol.finished, 'precise')"
+        >
         </KVItem>
         <KVItem :label="$t('solvers.slnTook')" :value="sol.took"> </KVItem>
         <KVItem :label="$t('solvers.slnIterations')" :value="sol.iterations">

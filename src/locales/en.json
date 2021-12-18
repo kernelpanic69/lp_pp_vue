@@ -1,12 +1,15 @@
 {
+  "app": {
+    "language": "Language",
+    "themeDark": "Dark"
+  },
   "model": {
     "sectionTitle": "Model",
     "nameLabel": "Name",
     "descriptionLabel": "Description",
-    "opTypeLabel": "OptimizationType",
+    "opTypeLabel": "Optimization Type",
     "opTypeMin": "Minimize",
-    "opTypeMax": "Maximize",
-    "isObjective": "Objective"
+    "opTypeMax": "Maximize"
   },
   "variables": {
     "sectionTitle": "Variables",
@@ -24,6 +27,7 @@
     "add": "Add constraint",
     "deleteConfirmTitle": "Delete constraint?",
     "delteConfirmText": "Are you sure you want to delete constraint?",
+    "isObjective": "Set objective",
     "isTarget": "This is objective",
     "itemTypeLabel": "Type",
     "typeEq": "=",
