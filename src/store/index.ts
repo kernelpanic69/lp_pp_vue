@@ -1,9 +1,9 @@
 import axios from "axios";
 import Vue from "vue";
 import Vuex from "vuex";
-import { brewlersProblem } from "./brewler";
-import { Constraint, ConsType, LpModel, randomRGB, Variable } from "./Model";
 import VuexPersist from "vuex-persist";
+import { Constraint, ConsType, LpModel, randomRGB, Variable } from "./Model";
+import { simpleProblem } from "./simple";
 
 Vue.use(Vuex);
 
@@ -12,8 +12,8 @@ const hostname = "http://10.36.41.20:8000/";
 type SolverNames = "glpk";
 const solverPaths = {
   glpk: "run-glpk",
-  "glpk-simplex": "run-simplex",
-  "lppp-simplex": "run-simplex",
+  "glpk-simplex": "run-glpk-simplex",
+  "lppp-simplex": "run-glpk-simplex",
   "lppp-bnb": "run-glpk",
   "lppp-homory": "run-glpk"
 };
@@ -76,7 +76,7 @@ export const mutations = {
 };
 
 export default new Vuex.Store<LpModel>({
-  state: brewlersProblem,
+  state: simpleProblem,
   mutations: {
     updateName(state: LpModel, newName: string) {
       state.name = newName;

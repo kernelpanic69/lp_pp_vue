@@ -155,10 +155,9 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
-import { actions, mutations } from "./store";
-import { LpModel } from "./store/Model";
-
 import benchmarks from "./benchmarks.json";
+import { actions, mutations } from "./store";
+import { simpleProblem } from "./store/simple";
 
 @Component({})
 export default class App extends Vue {
@@ -250,7 +249,7 @@ export default class App extends Vue {
   }
 
   loadNew() {
-    this.$store.commit(mutations.LOAD, new LpModel());
+    this.$store.commit(mutations.LOAD, simpleProblem);
   }
 
   drawer = false;
