@@ -9,7 +9,7 @@
     "descriptionLabel": "Опис",
     "opTypeLabel": "Тип оптимізації",
     "opTypeMin": "Мінімізувати",
-    "opTypeMax": "Максімізувати"
+    "opTypeMax": "Максимізувати"
   },
   "variables": {
     "sectionTitle": "Змінні",
@@ -26,7 +26,7 @@
     "itemDescLabel": "Опис",
     "add": "Додати обмеження",
     "deleteConfirmTitle": "Видалити обмеження?",
-    "delteConfirmText": "Ви впевнені, що хочете видалити обмеження?",
+    "deleteConfirmText": "Ви впевнені, що хочете видалити обмеження?",
     "isTarget": "Це мета",
     "isObjective": "Зробити метою",
     "itemTypeLabel": "Тип",

@@ -7,7 +7,7 @@ import VuexPersist from "vuex-persist";
 
 Vue.use(Vuex);
 
-const hostname = "http://10.36.41.20:9080/";
+const hostname = "http://10.36.41.20:8000/";
 
 type SolverNames = "glpk";
 const solverPaths = {
@@ -327,10 +327,6 @@ export default new Vuex.Store<LpModel>({
             return axios
               .get(hostname + solverPaths[params.name], {
                 transformResponse: (data, headers) => {
-                  if (data.error) {
-                    return data;
-                  }
-
                   const d = JSON.parse(data);
 
                   const res: Solution = {
@@ -344,8 +340,8 @@ export default new Vuex.Store<LpModel>({
                     took: d.stats.took,
                     iterations: d.stats.iterations,
                     ips: (d.stats.iterations / d.stats.took) * 1000,
-                    started: new Date(d.stats.started),
-                    finished: new Date(d.stats.finished),
+                    started: d.stats.started,
+                    finished: d.stats.finished,
                   };
 
                   return res;

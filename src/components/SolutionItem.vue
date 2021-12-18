@@ -1,7 +1,7 @@
 <template>
   <v-expansion-panel>
     <v-expansion-panel-header disable-icon-rotate>
-      {{ sol.solver }} - <em>{{ $d(sol.finished, "precise") }}</em>
+      {{ sol.solver }} - <em>{{ $d(new Date(sol.finished), "precise") }}</em>
       <template v-slot:actions>
         <v-btn icon @click="deleteSln">
           <v-icon color="error">mdi-trash-can</v-icon>
