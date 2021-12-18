@@ -12,7 +12,7 @@
     </v-expansion-panel-header>
 
     <v-expansion-panel-content>
-      <v-alert v-if="sol.err" type="error"></v-alert>
+      <v-alert v-if="sol.err" type="error">sol.err</v-alert>
       <v-container v-else fluid>
         <h5 class="text-h5 mb-4 mt-4">{{ $t("solvers.slnTitle") }}</h5>
 
