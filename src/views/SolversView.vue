@@ -62,7 +62,7 @@ export default class SolversView extends Vue {
     },
   ];
 
-  chosenSolver = "glpk";
+  chosenSolver = "simplex";
 
   runSolver() {
     if (!this.$store.getters.numVariables) {
