@@ -206,7 +206,7 @@ export default class ConstraintItem extends Vue {
 
   editDialog = false;
   editedCoef!: any;
-  newCoef = 0.0;
+  newCoef = "0";
 
   nameRules = [
     (name: string) => !!name || "Name is required",
@@ -256,10 +256,8 @@ export default class ConstraintItem extends Vue {
     this.$store.commit(mutations.SET_CON_COEF, {
       conId: this.constraint.id,
       varId: this.editedCoef.varId,
-      coef: this.newCoef,
+      coef: parseFloat(this.newCoef),
     });
-
-    console.log(this.constraint.coefs);
 
     this.cancelEdit();
   }

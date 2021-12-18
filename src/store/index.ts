@@ -4,19 +4,13 @@ import Vuex from "vuex";
 import VuexPersist from "vuex-persist";
 import { Constraint, ConsType, LpModel, randomRGB, Variable } from "./Model";
 import { simpleProblem } from "./simple";
+import { compress, decompress } from "lz-string";
 
 Vue.use(Vuex);
 
 const hostname = "http://10.36.41.20:8000/";
 
-type SolverNames = "glpk";
-const solverPaths = {
-  glpk: "run-glpk",
-  "glpk-simplex": "run-glpk-simplex",
-  "lppp-simplex": "run-glpk-simplex",
-  "lppp-bnb": "run-glpk",
-  "lppp-homory": "run-glpk"
-};
+type SolverNames = "glpk" | "simplex" | "bnb" | "homory";
 
 let solutionId = 0;
 
@@ -30,6 +24,9 @@ export interface Solution {
   finished: Date;
   took: number;
   iterations: number;
+  cuts?: number;
+  branches?: number;
+  memory: number;
   ips: number;
   objective: number;
   variables: { [name: string]: number };
@@ -273,11 +270,19 @@ export default new Vuex.Store<LpModel>({
       return res;
     },
   },
-  plugins: [
-    // new VuexPersist<LpModel>({
-    //   storage: window.localStorage
-    // }).plugin
-  ],
+  // plugins: [
+  //   new VuexPersist<LpModel>({
+  //     storage: window.localStorage,
+  //     saveState(key, state, storage) {
+  //       storage?.setItem(key, compress(JSON.stringify(state)))
+  //     },
+  //     restoreState(key, storage) {
+  //       if (storage) {
+  //         return JSON.parse(decompress(storage!.getItem(key)!)!)
+  //       }
+  //     }
+  //   }).plugin
+  // ],
   modules: {
     solvers: {
       namespaced: true,
@@ -325,7 +330,7 @@ export default new Vuex.Store<LpModel>({
             commit("setRunning", true);
 
             return axios
-              .get(hostname + solverPaths[params.name], {
+              .get(hostname + "run-solver/" + params.name, {
                 transformResponse: (data, headers) => {
                   const d = JSON.parse(data);
 
@@ -339,6 +344,8 @@ export default new Vuex.Store<LpModel>({
                     objective: d.objective,
                     took: d.stats.took,
                     iterations: d.stats.iterations,
+                    cuts: d.stats.cuts,
+                    memory: d.stats.memory,
                     ips: (d.stats.iterations / d.stats.took) * 1000,
                     started: d.stats.started,
                     finished: d.stats.finished,
@@ -388,7 +395,7 @@ export default new Vuex.Store<LpModel>({
                     data.objective.push(getters.objective.coefs[v.id]);
                     if (v.isInteger) {
                       data.ints.push(1);
-                    }else{
+                    } else {
                       data.ints.push(0);
                     }
                   }
@@ -416,6 +423,8 @@ export default new Vuex.Store<LpModel>({
 
                     data.constraints.push(row);
                   }
+
+                  console.log(data);
 
                   return JSON.stringify(data);
                 },

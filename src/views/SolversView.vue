@@ -33,7 +33,7 @@
 </template>
 
 <script lang="ts">
-import { actions, mutations } from "@/store";
+import { actions, mutations, Solution } from "@/store";
 import Vue from "vue";
 import PaginationContainer from "@/components/PaginationContainer.vue";
 import SolutionItem from "@/components/SolutionItem.vue";
@@ -45,24 +45,20 @@ export default class SolversView extends Vue {
 
   solverOptions = [
     {
+      text: this.$t("solvers.glpkSimplex"),
+      value: "simplex",
+    },
+    {
       text: this.$t("solvers.glpk"),
       value: "glpk",
     },
     {
-      text: this.$t("solvers.glpkSimplex"),
-      value: "glpk-simplex",
-    },
-    {
-      text: this.$t("solvers.lpppSimplex"),
-      value: "lppp-simplex",
-    },
-    {
       text: this.$t("solvers.lpppBnB"),
-      value: "lppp-bnb",
+      value: "bnb",
     },
     {
       text: this.$t("solvers.lpppHomory"),
-      value: "lppp-homory",
+      value: "homory",
     },
   ];
 
@@ -124,8 +120,8 @@ export default class SolversView extends Vue {
     return this.$store.state.solvers;
   }
 
-  get solutions(): any[] {
-    return Object.values(this.solvers.solutions).slice().reverse();
+  get solutions(): Solution[] {
+    return Object.values(this.solvers.solutions);
   }
 
   get hasMessage(): boolean {

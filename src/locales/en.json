@@ -53,14 +53,14 @@
     "ipsLabel": "IPS",
     "errNotEnoughVariables": "At least 2 variables required to plot",
     "errTooMuchVariables": "Too much variables to plot on a 2d space",
-    "errNoConstraints": "No constraints to plot"
+    "errNoConstraints": "No constraints to plot",
+    "memLabel": "Memory used"
   },
   "solvers": {
     "sectionTitle": "Solvers",
     "selectLabel": "Choose method",
     "glpk": "GLPK (Branch and Cut)",
     "glpkSimplex": "GLPK (Regular simplex method)",
-    "lpppSimplex": "Lp++ (Simplex method)",
     "lpppBnB": "Lp++ (Branch and bounds)",
     "lpppHomory": "Lp++ (Homory cuts)",
     "statsTitle": "Stats",
@@ -69,6 +69,11 @@
     "slnTook": "Took",
     "slnIterations": "Simplex iterations",
     "slnIps": "IPS",
+    "slnMemory": "Memory used",
+    "slnCuts": "Homory cuts done",
+    "slnBranches": "Branches",
+    "errNoVars": "Error: no variables in model.",
+    "errNoCons": "Error: no constraints in model.",
     "slnTitle": "Solution",
     "slnObjective": "Objective value",
     "chartColor": "Chart color",
@@ -95,6 +100,9 @@
     "cancel": "Cancel",
     "done": "Done",
     "colorDlgTitle": "Choose color",
-    "confirm": "confirm"
+    "confirm": "confirm",
+    "memKb": "Kb",
+    "memMb": "Mb",
+    "memB": "B"
   }
 }

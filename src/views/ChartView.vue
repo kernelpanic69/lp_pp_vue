@@ -11,6 +11,7 @@
           <v-tab>{{ $t("charts.executionLabel") }}</v-tab>
           <v-tab>{{ $t("charts.iterationLabel") }}</v-tab>
           <v-tab>{{ $t("charts.ipsLabel") }}</v-tab>
+          <v-tab>{{ $t("charts.memLabel") }}</v-tab>
         </v-tabs>
         <v-tabs-items v-model="tab" class="mt-8">
           <v-tab-item>
@@ -28,6 +29,10 @@
           <v-tab-item>
             <IPSChart> </IPSChart>
           </v-tab-item>
+
+          <v-tab-item>
+            <MemoryChart></MemoryChart>
+          </v-tab-item>
         </v-tabs-items>
       </v-card-text>
     </v-card>
@@ -41,6 +46,7 @@ import ModelChart from "@/components/ModelChart.vue";
 import ExecutionChart from "@/components/ExecutionChart.vue";
 import IterChart from "@/components/IterChart.vue";
 import IPSChart from "@/components/IPSChart.vue";
+import MemoryChart from "@/components/MemoryChart.vue";
 
 @Component({
   name: "ChartsView",
@@ -49,6 +55,7 @@ import IPSChart from "@/components/IPSChart.vue";
     ExecutionChart,
     IterChart,
     IPSChart,
+    MemoryChart,
   },
 })
 export default class ChartView extends Vue {

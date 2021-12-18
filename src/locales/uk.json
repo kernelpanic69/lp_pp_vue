@@ -53,21 +53,26 @@
     "ipsLabel": "Ітерацій за секунду",
     "errNotEnoughVariables": "Модель має містити 2 змінних",
     "errTooMuchVariables": "Забагато змінних для відображення у 2d просторі",
-    "errNoConstraints": "Немає обмежень"
+    "errNoConstraints": "Немає обмежень",
+    "memLabel": "Пам'яті використано"
   },
   "solvers": {
     "sectionTitle": "Результати",
     "selectLabel": "Обрати метод",
     "glpk": "GLPK - Гілок і зрізів",
     "glpkSimplex": "GLPK - Звичайний симплекс метод",
-    "lpppSimplex": "Lp++ - Звичайний симплекс метод",
     "lpppBnB": "Lp++ - Гілок і меж",
     "lpppHomory": "Lp++ - Метод зрізів (Р. Гоморі)",
+    "errNoVars": "Помилка: в моделі відсутні змінні.",
+    "errNoCons": "Помилка: в моделі відсутні обмеження.",
     "statsTitle": "Показники",
     "slnStarted": "Розпочато",
     "slnFinished": "Закінчено",
     "slnTook": "Зайняло часу",
     "slnIterations": "Ітерацій",
+    "slnMemory": "Пам'яті використано",
+    "slnCuts": "Зрізів Гоморі",
+    "slnBranches": "Гілок",
     "slnIps": "Ітерацій за сек.",
     "slnTitle": "Вирішення",
     "slnObjective": "Мета",
@@ -95,6 +100,9 @@
     "cancel": "Скасувати",
     "done": "Готово",
     "colorDlgTitle": "Оберіть колір",
-    "confirm": "добре"
+    "confirm": "добре",
+    "memKb": "Кб",
+    "memMb": "Мб",
+    "memB": "Б"
   }
 }
