@@ -106,7 +106,7 @@
           <v-row justify="center">
             <v-card>
               <v-card-title>
-                {{ $t("constraints.colorDlgTitle") }}
+                {{ $t("commonUi.colorDlgTitle") }}
               </v-card-title>
               <v-card-text>
                 <v-color-picker v-model="color"></v-color-picker>

@@ -97,10 +97,23 @@ export default class SolversView extends Vue {
       })
       .catch((err) => {
         this.$store.commit(mutations.SOLVERS.SET_MESSAGE, {
-          message: err.message,
+          message: this.getResponseError(err),
           type: "error",
         });
       });
+  }
+
+  getResponseError(err: any) {
+    console.log(JSON.stringify(err));
+    if (err.response) {
+      if (err.response.data) {
+        return err.response.data.error;
+      } else {
+        return err.response.statusText;
+      }
+    } else {
+      return err.message;
+    }
   }
 
   get isLoading(): boolean {
@@ -112,7 +125,7 @@ export default class SolversView extends Vue {
   }
 
   get solutions(): any[] {
-    return Object.values(this.solvers.solutions);
+    return Object.values(this.solvers.solutions).slice().reverse();
   }
 
   get hasMessage(): boolean {

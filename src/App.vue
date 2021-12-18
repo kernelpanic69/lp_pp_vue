@@ -250,6 +250,7 @@ export default class App extends Vue {
 
   loadNew() {
     this.$store.commit(mutations.LOAD, simpleProblem);
+    this.newConfirmShow = false;
   }
 
   drawer = false;

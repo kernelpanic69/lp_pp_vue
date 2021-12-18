@@ -274,9 +274,9 @@ export default new Vuex.Store<LpModel>({
     },
   },
   plugins: [
-    new VuexPersist<LpModel>({
-      storage: window.localStorage
-    }).plugin
+    // new VuexPersist<LpModel>({
+    //   storage: window.localStorage
+    // }).plugin
   ],
   modules: {
     solvers: {
@@ -387,7 +387,9 @@ export default new Vuex.Store<LpModel>({
                     data.variables.push(v.name);
                     data.objective.push(getters.objective.coefs[v.id]);
                     if (v.isInteger) {
-                      data.ints.push(i);
+                      data.ints.push(1);
+                    }else{
+                      data.ints.push(0);
                     }
                   }
 
