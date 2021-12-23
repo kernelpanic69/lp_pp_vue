@@ -19,6 +19,14 @@
           <v-list-item link @click.stop="benchLoadShow = true">
             {{ $t("menu.fileBench") }}
           </v-list-item>
+
+          <v-list-item link @click="loadDemo">
+            {{ $t("menu.fileDemo") }}
+          </v-list-item>
+
+          <v-list-item link @click="loadSimple">
+            {{ $t("menu.fileSimple") }}
+          </v-list-item>
         </v-list>
       </v-menu>
 
@@ -158,6 +166,8 @@ import Component from "vue-class-component";
 import benchmarks from "./benchmarks.json";
 import { actions, mutations } from "./store";
 import { simpleProblem } from "./store/simple";
+import { pumps } from "./store/pumps";
+import { LpModel } from "./store/Model";
 
 @Component({})
 export default class App extends Vue {
@@ -248,9 +258,17 @@ export default class App extends Vue {
     this.$vuetify.theme.dark = newVal;
   }
 
-  loadNew() {
+  loadSimple() {
     this.$store.commit(mutations.LOAD, simpleProblem);
+  }
+
+  loadNew() {
+    this.$store.commit(mutations.LOAD, new LpModel());
     this.newConfirmShow = false;
+  }
+
+  loadDemo() {
+    this.$store.commit(mutations.LOAD, pumps);
   }
 
   drawer = false;

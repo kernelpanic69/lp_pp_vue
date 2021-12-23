@@ -38,8 +38,6 @@
         </KVItem>
         <KVItem :label="$t('solvers.slnIterations')" :value="sol.iterations">
         </KVItem>
-        <KVItem :label="$t('solvers.slnIps')" :value="sol.ips.toFixed(3)">
-        </KVItem>
 
         <KVItem :label="$t('solvers.slnMemory')" :value="memory"> </KVItem>
         <KVItem

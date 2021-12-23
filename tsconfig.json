@@ -12,6 +12,8 @@
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
+    "declarationDir": "./node_modules/@types/",
+    "declaration": true,
     "baseUrl": ".",
     "types": [
       "webpack-env"

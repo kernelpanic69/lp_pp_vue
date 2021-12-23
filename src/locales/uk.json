@@ -9,7 +9,11 @@
     "descriptionLabel": "Опис",
     "opTypeLabel": "Тип оптимізації",
     "opTypeMin": "Мінімізувати",
-    "opTypeMax": "Максимізувати"
+    "opTypeMax": "Максимізувати",
+    "mathReprTitle": "Математична модель",
+    "mathReprSubjTo": "Відповідно \\; до",
+    "mathReprAlso": "І \\; також",
+    "mathReprModelTooBig": "Модель завелика!"
   },
   "variables": {
     "sectionTitle": "Змінні",
@@ -87,6 +91,8 @@
   "menu": {
     "file": "Файл",
     "fileNew": "Новий",
+    "fileSimple": "Завантажити просту модель",
+    "fileDemo": "Завантажити демо",
     "newConfirmTitle": "Створити нову модель?",
     "newConfirmText": "Ви хочете створити нову модель. Ваша поточна модель буде видалена",
     "fileBench": "Завантажити бенчмарк",

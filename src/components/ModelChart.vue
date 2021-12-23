@@ -3,7 +3,7 @@
     v-if="!plotMessage"
     type="scatter"
     :data="chartData"
-    :options="{ showLine: true }"
+    :options="options"
   >
   </ChartJs>
 
@@ -17,6 +17,7 @@ import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import { Constraint } from "@/store/Model";
 import ChartJs from "@/components/ChartJs.vue";
+import { ChartOptions, registry } from "chart.js";
 
 @Component({
   name: "ChartsView",
@@ -39,6 +40,26 @@ export default class ModelChart extends Vue {
     }
 
     return "";
+  }
+
+  get options() {
+    return {
+      showLine: true,
+      scales: {
+        x: {
+          title: {
+            display: true,
+            text: this.$store.getters.variablesList[0].name,
+          },
+        },
+        y: {
+          title: {
+            display: true,
+            text: this.$store.getters.variablesList[1].name,
+          },
+        },
+      },
+    };
   }
 
   get chartData(): any {

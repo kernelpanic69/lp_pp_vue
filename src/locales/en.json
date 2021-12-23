@@ -9,7 +9,11 @@
     "descriptionLabel": "Description",
     "opTypeLabel": "Optimization Type",
     "opTypeMin": "Minimize",
-    "opTypeMax": "Maximize"
+    "opTypeMax": "Maximize",
+    "mathReprTitle": "Math representation",
+    "mathReprSubjTo": "Subject \\; To",
+    "mathReprAlso": "And \\; also",
+    "mathReprModelTooBig": "Model is too big"
   },
   "variables": {
     "sectionTitle": "Variables",
@@ -87,6 +91,8 @@
   "menu": {
     "file": "File",
     "fileNew": "New",
+    "fileSimple": "Load simple model",
+    "fileDemo": "Load demo",
     "newConfirmTitle": "Create new model",
     "newConfirmText": "Do you want to create new model. Your currrent model will be overriden",
     "fileBench": "Load benchmark",

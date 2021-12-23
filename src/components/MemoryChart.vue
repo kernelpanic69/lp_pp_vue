@@ -1,5 +1,5 @@
 <template>
-  <ChartJs type="bar" :data="chartData" :options="{ showLine: true }">
+  <ChartJs type="bar" :data="chartData" >
   </ChartJs>
 </template>
 
