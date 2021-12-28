@@ -15,14 +15,24 @@ export default class ChartJs extends Vue {
   @Prop() type!: "bar" | "scatter";
   @Prop() options!: ChartOptions;
 
+  chart: Chart | null = null;
+
+  resetZoom() {
+    if (this.chart) {
+      this.chart.resetZoom();
+    }
+  }
+
   mounted(): void {
     Chart.register(...registerables);
 
-    new Chart(this.$refs.canvas as HTMLCanvasElement, {
+    this.chart = new Chart(this.$refs.canvas as HTMLCanvasElement, {
       type: this.type,
       data: this.data,
       options: this.options,
-    }).render();
+    });
+
+    this.chart.render();
   }
 }
 </script>

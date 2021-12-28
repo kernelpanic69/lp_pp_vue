@@ -6,6 +6,15 @@
       </v-card-title>
 
       <v-card-text>
+        <v-snackbar
+          dismissible
+          v-model="hasMessage"
+          :timeout="2000"
+          :color="solvers.messageType"
+        >
+          {{ solvers.message }}
+        </v-snackbar>
+
         <v-row align="baseline">
           <v-col>
             <v-select
@@ -20,10 +29,6 @@
             >
           </v-col>
         </v-row>
-
-        <v-alert dismissible v-model="hasMessage" :type="solvers.messageType">
-          {{ solvers.message }}
-        </v-alert>
 
         <PaginationContainer :component="solutionItem" :items="solutions">
         </PaginationContainer>

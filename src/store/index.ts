@@ -1,10 +1,7 @@
 import axios from "axios";
 import Vue from "vue";
 import Vuex from "vuex";
-import VuexPersist from "vuex-persist";
 import { Constraint, ConsType, LpModel, randomRGB, Variable } from "./Model";
-import { simpleProblem } from "./simple";
-import { compress, decompress } from "lz-string";
 
 Vue.use(Vuex);
 
@@ -73,7 +70,7 @@ export const mutations = {
 };
 
 export default new Vuex.Store<LpModel>({
-  state: simpleProblem,
+  state: new LpModel(),
   mutations: {
     updateName(state: LpModel, newName: string) {
       state.name = newName;

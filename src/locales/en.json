@@ -92,6 +92,8 @@
     "file": "File",
     "fileNew": "New",
     "fileSimple": "Load simple model",
+    "fileUnbounded": "Load unbounded model",
+    "fileUnfeasible": "Load unfeasible model",
     "fileDemo": "Load demo",
     "newConfirmTitle": "Create new model",
     "newConfirmText": "Do you want to create new model. Your currrent model will be overriden",

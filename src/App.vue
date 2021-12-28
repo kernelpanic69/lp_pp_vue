@@ -24,8 +24,12 @@
             {{ $t("menu.fileDemo") }}
           </v-list-item>
 
-          <v-list-item link @click="loadSimple">
-            {{ $t("menu.fileSimple") }}
+          <v-list-item link @click="loadUnbounded">
+            {{ $t("menu.fileUnbounded") }}
+          </v-list-item>
+
+          <v-list-item link @click="loadUnfeasible">
+            {{ $t("menu.fileUnfeasible") }}
           </v-list-item>
         </v-list>
       </v-menu>
@@ -165,9 +169,11 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import benchmarks from "./benchmarks.json";
 import { actions, mutations } from "./store";
-import { simpleProblem } from "./store/simple";
+import { unbnd, unfeas } from "./store/simple";
 import { pumps } from "./store/pumps";
 import { LpModel } from "./store/Model";
+import { Chart } from "chart.js";
+import zoomPlugin from "chartjs-plugin-zoom";
 
 @Component({})
 export default class App extends Vue {
@@ -232,6 +238,8 @@ export default class App extends Vue {
   created() {
     this.$i18n.locale = this.locale;
     this.$vuetify.theme.dark = this.dark;
+
+    Chart.register(zoomPlugin);
   }
 
   get locale() {
@@ -258,8 +266,12 @@ export default class App extends Vue {
     this.$vuetify.theme.dark = newVal;
   }
 
-  loadSimple() {
-    this.$store.commit(mutations.LOAD, simpleProblem);
+  loadUnbounded() {
+    this.$store.commit(mutations.LOAD, unbnd);
+  }
+
+  loadUnfeasible() {
+    this.$store.commit(mutations.LOAD, unfeas);
   }
 
   loadNew() {

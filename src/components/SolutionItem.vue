@@ -12,11 +12,11 @@
     </v-expansion-panel-header>
 
     <v-expansion-panel-content>
-      <v-alert v-if="sol.err" type="error">{{sol.err}}</v-alert>
-      <v-container v-else fluid>
-        <h5 class="text-h5 mb-4 mt-4">{{ $t("solvers.slnTitle") }}</h5>
+      <v-alert v-if="sol.err" class="mt-8" type="error">{{sol.err}}</v-alert>
+      <v-container fluid>
+        <h5 v-if="!sol.err" class="text-h5 mb-4 mt-4">{{ $t("solvers.slnTitle") }}</h5>
 
-        <KVItem :label="$t('solvers.slnObjective')" :value="sol.objective.toFixed(4)">
+        <KVItem v-if="!sol.err" :label="$t('solvers.slnObjective')" :value="sol.objective.toFixed(4)">
         </KVItem>
 
         <h5 class="text-h5 mb-4 mt-4">{{ $t("solvers.statsTitle") }}</h5>
@@ -44,12 +44,6 @@
           :label="$t('solvers.slnCuts')"
           :value="sol.cuts"
           v-if="sol.cuts"
-        ></KVItem>
-
-        <KVItem
-          :label="$t('solvers.slnBranches')"
-          :value="sol.branches"
-          v-if="sol.branches"
         ></KVItem>
 
         <h5 class="text-h5 mb-4 mt-4">{{ $t("solvers.slnDisplay") }}</h5>
@@ -82,9 +76,9 @@
           </v-row>
         </v-dialog>
 
-        <h5 class="text-h5 mb-4 mt-4">{{ $t("solvers.slnVars") }}</h5>
+        <h5 v-if="!sol.err" class="text-h5 mb-4 mt-4">{{ $t("solvers.slnVars") }}</h5>
 
-        <v-card>
+        <v-card v-if="!sol.err">
           <v-card-title>
             <v-row>
               <v-col>

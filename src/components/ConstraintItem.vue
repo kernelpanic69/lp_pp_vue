@@ -303,14 +303,14 @@ export default class ConstraintItem extends Vue {
     });
   }
 
-  get value(): number {
-    return this.constraint.value;
+  get value(): string {
+    return this.constraint.value.toFixed(2);
   }
 
-  set value(newValue: number) {
+  set value(newValue: string) {
     this.$store.commit(mutations.SET_CON_VALUE, {
       id: this.constraint.id,
-      value: newValue,
+      value: Number.parseFloat(newValue),
     });
   }
 
